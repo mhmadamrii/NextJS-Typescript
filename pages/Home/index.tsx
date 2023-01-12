@@ -1,6 +1,6 @@
+import React, { useReducer } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import React from 'react'
 import {
   Parallax,
   ParallaxBanner,
@@ -11,12 +11,39 @@ interface Props {
   name?: string
 }
 
+interface State {
+  count: number
+  // test: any
+}
+
+interface Action {
+  type: string
+  payload?: any
+}
+
+// reducer
+const reducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'increment':
+      return {
+        count: state.count + 1,
+      }
+    case 'decrement':
+      return {
+        count: state.count - 1,
+      }
+    default:
+      return state
+  }
+}
+
 const HomeOne: NextPage<Props> = (props) => {
   const { name } = props
   return <h1>the name is {name}</h1>
 }
 
 const Home: NextPage = () => {
+  const [state, dispatch] = useReducer(reducer, { count: 0 })
   return (
     <>
       <Head>
@@ -33,8 +60,15 @@ const Home: NextPage = () => {
                 speed={-20}
               />
             </ParallaxBanner>
+
+            <ParallaxBanner style={{ aspectRatio: '2 / 1' }}>
+              <ParallaxBannerLayer
+                image="https://plus.unsplash.com/premium_photo-1669040674572-836c64a3ac70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80"
+                speed={-20}
+              />
+            </ParallaxBanner>
           </div>
-          <HomeOne />
+
           <div>
             <Parallax translateY={[-20, 10]}>
               <p style={{ border: '1px solid' }}>
@@ -60,6 +94,12 @@ const Home: NextPage = () => {
               </p>
             </Parallax>
 
+            <center>
+              <h1>{state.count}</h1>
+              <button onClick={() => dispatch({ type: 'increment' })}>
+                increment
+              </button>
+            </center>
             <h1>Parallax</h1>
             <p>
               Dolor ea do ipsum sunt anim sunt do. Sit labore reprehenderit
