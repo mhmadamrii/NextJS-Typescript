@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 type Props = {
   name: string
@@ -9,11 +9,12 @@ type State = {
 }
 
 const About: React.FC = () => {
-
+  const [name, setName] = useState<string>('')
   const lastParagraph = useRef<HTMLParagraphElement | null>(null)
+  console.log(lastParagraph)
   const handleScrollTo = () => {
     console.log(lastParagraph.current)
-    if(lastParagraph.current) {
+    if (lastParagraph.current) {
       lastParagraph.current.scrollIntoView({ behavior: 'smooth' })
     }
   }
@@ -22,6 +23,8 @@ const About: React.FC = () => {
     <div>
       <h1>Hello world</h1>
       <button onClick={handleScrollTo}>click scroll</button>
+      <h1>{name}</h1>
+      <button onClick={() => setName('name changed')}>set name</button>
       <p>
         Aliquip exercitation in commodo ullamco duis sunt duis tempor. Ipsum
         pariatur reprehenderit nostrud veniam amet Lorem nulla mollit
