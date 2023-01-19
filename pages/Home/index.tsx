@@ -42,7 +42,7 @@ const HomeOne: NextPage<Props> = (props) => {
   return <h1>the name is {name}</h1>
 }
 
-const Home: NextPage = () => {
+const Home: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, { count: 0 })
   return (
     <>

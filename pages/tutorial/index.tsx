@@ -1,25 +1,42 @@
 import Head from 'next/head'
-import React, { useState, ChangeEvent } from 'react'
-import { createNoSubstitutionTemplateLiteral } from 'typescript'
+import React, { useState, ChangeEvent, useEffect } from 'react'
+import axios from 'axios'
 
+// define shape of object when creating props/state
+
+enum HairColor {
+  blonde = 'Your hair is blonde, good for you',
+  brown = 'Cool hair color',
+  pink = "That's so gorgeous",
+}
 interface Props {
   name?: any
-  getName: () => string
+  getName?: () => string
+  hairColor?: HairColor
 }
 
-interface State {}
-
 const Child: React.FC<Props> = (props) => {
-  // console.log('child', props)
-  // console.log(props.getName())
+  const url = 'https://reqres.in/api/products'
+  console.log("props", props)
+
+
+  type Name = "pedro" | "jack" 
+  const nameForUs: Name = "pedro"
+
+
+  useEffect(() => {
+    axios.get(url).then((res) => console.log(res.data.data))
+  }, [])
+
   return (
     <>
       <h1>{props.name}</h1>
+      <h2>{props.hairColor}</h2>
     </>
   )
 }
 
-const Tutorial: React.FC<Props> = (props) => {
+const Tutorial: React.FC = () => {
   const name: string = 'pedro'
 
   const getName = (): string => {
@@ -41,9 +58,12 @@ const Tutorial: React.FC<Props> = (props) => {
       </Head>
 
       <main>
-        <h1>{country}</h1>
-        <Child name={name} getName={getName} />
-        <input placeholder="country..." onChange={handleChange} />
+        <div style={{ margin: 'auto', width: 500 }}>
+          <h1>{country}</h1>
+          <Child hairColor={HairColor.blonde} />
+          <input placeholder="country..." onChange={handleChange} />
+          {HairColor.blonde}
+        </div>
       </main>
     </>
   )
